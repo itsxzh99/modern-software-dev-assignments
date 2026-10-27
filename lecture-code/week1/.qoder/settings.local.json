@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(which tmux expect python3; echo \"---\"; python3 -c \"import pexpect; print\\('pexpect ok'\\)\" 2>&1 | tail -1)",
+      "Bash(ls -a | head -20; echo \"--- .env keys ---\"; [ -f .env ] && sed 's/=.*/=<set>/' .env; echo \"--- tmux ---\"; tmux ls 2>&1)",
+      "Bash(tmux send-keys -t agent -l 'Use your list_files tool on the current directory \".\". Remember the required format: one line \"tool: list_files\\({\\\\\"path\\\\\": \\\\\".\\\\\"}\\)\"'\nsleep 1; tmux send-keys -t agent Enter\nsleep 20; tmux capture-pane -pt agent | grep -v '^$' | tail -12)",
+      "Bash(sleep 20; tmux capture-pane -pt agent | grep -v '^$' | tail -14)",
+      "Bash(pwd; ls -l Hello.txt; echo \"--- 内容\\(hexdump 尾部看有无换行\\) ---\"; cat Hello.txt; echo; xxd Hello.txt)",
+      "Bash(tmux send-keys -t agent -l 'Now edit Hello.txt: replace its current content \"Hello\" with \"Hi\". Use the edit_file tool with old_str set to the existing text.'\nsleep 1; tmux send-keys -t agent Enter\nsleep 22; tmux capture-pane -pt agent | grep -v '^$' | tail -7)",
+      "Bash(cat Hello.txt; echo; echo \"--- 字节 ---\"; wc -c < Hello.txt; xxd Hello.txt)"
+    ]
+  }
+}
